@@ -1,0 +1,11 @@
+name: Rave
+version: ${project.version}
+main: me.ghit.rave.Rave
+api-version: 1.16
+authors: [ghit]
+description: An easy-to-use parties plugin.
+commands:
+  rave:
+    usage: /<command>
+    description: Main command for the Rave plugin.
+    aliases: [p, party]
