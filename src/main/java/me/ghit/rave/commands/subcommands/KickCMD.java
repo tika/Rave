@@ -68,11 +68,6 @@ public class KickCMD extends SubCommand {
 
         party.leaveParty(mentioned.getUniqueId());
         party.message(Chat.toColor(String.format("&a%s has been kicked from the party!", mentioned.getName())));
-
-        if (party.getMembers().size() == 1) {
-            party.disband();
-            Bukkit.getPlayer(party.getLeader()).sendMessage(Chat.toColor("&bThe party has been disbanded as all the members have left"));
-        }
     }
 
     @Override

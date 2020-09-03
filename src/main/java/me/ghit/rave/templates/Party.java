@@ -12,7 +12,7 @@ public class Party {
 
     private final Rave plugin = Rave.getInstance();
 
-    private final UUID leader;
+    private UUID leader;
     private final List<UUID> members = new ArrayList<>();
     private final long createdms;
 
@@ -41,6 +41,18 @@ public class Party {
 
     public void leaveParty(UUID player) {
         members.remove(player);
+
+        if (members.size() == 1) {
+            message("&bThe party has been disbanded as all the members have left");
+            disband();
+            return;
+        }
+
+        // If the player that leaves is the leader
+        if (leader == player) {
+            // promote first in members list
+            promote(members.get(0));
+        }
     }
 
     public void create() {
@@ -49,11 +61,15 @@ public class Party {
 
     public void message(String raw) {
         String colored = Chat.toColor(String.format("&a&lPARTY > &7%s", raw));
-
         members.forEach(member -> Bukkit.getPlayer(member).sendMessage(colored));
     }
 
     public void disband() {
         plugin.getParties().remove(this);
+    }
+
+    public void promote(UUID player) {
+        leader = player;
+        message("&a" + Bukkit.getOfflinePlayer(player).getName() + " is now the party leader");
     }
 }

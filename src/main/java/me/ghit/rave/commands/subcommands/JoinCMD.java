@@ -12,7 +12,7 @@ import java.util.List;
 public class JoinCMD extends SubCommand {
     @Override
     public String getName() {
-        return "Join";
+        return "join";
     }
 
     @Override

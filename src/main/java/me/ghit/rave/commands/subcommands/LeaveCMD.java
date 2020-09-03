@@ -41,12 +41,7 @@ public class LeaveCMD extends SubCommand {
         String leaderName = Bukkit.getOfflinePlayer(p.getLeader()).getName();
         player.sendMessage(Chat.toColor(String.format("&aYou have left &d%s's &aparty!", leaderName)));
         p.leaveParty(player.getUniqueId());
-
-        // If no members
-        if (p.getMembers().size() == 1) {
-            p.disband();
-            Bukkit.getPlayer(p.getLeader()).sendMessage(Chat.toColor("&bThe party has been disbanded as all the members have left"));
-        }
+        p.message(player.getName() + "&b has left the party");
     }
 
     @Override
