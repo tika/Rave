@@ -1,33 +1,32 @@
 package me.ghit.rave.commands.subcommands;
 
 import me.ghit.rave.commands.SubCommand;
-import me.ghit.rave.templates.Party;
 import me.ghit.rave.utils.Chat;
+import me.ghit.rave.utils.ChatUtils;
 import me.ghit.rave.utils.PartyUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class LeaveCMD extends SubCommand {
+public class ChatCMD extends SubCommand {
     @Override
     public String getName() {
-        return "leave";
+        return "chat";
     }
 
     @Override
     public String getDescription() {
-        return "Leave the party";
+        return "Toggles party chat";
     }
 
     @Override
     public String getSyntax() {
-        return "/rave leave";
+        return "/party chat [<enable, disable>]";
     }
 
     @Override
     public void perform(Player player, String[] args) {
-        if (!player.hasPermission("rave.leave") || !player.hasPermission("rave.*")) {
+        if (!player.hasPermission("rave.chat") || !player.hasPermission("rave.*")) {
             player.sendMessage(Chat.toColor("&cYou do not have permission to use this command!"));
             return;
         }
@@ -37,16 +36,8 @@ public class LeaveCMD extends SubCommand {
             return;
         }
 
-        Party p = PartyUtils.findParty(player.getUniqueId());
-        String leaderName = Bukkit.getOfflinePlayer(p.getLeader()).getName();
-        player.sendMessage(Chat.toColor(String.format("&aYou have left &d%s's &aparty!", leaderName)));
-        p.leaveParty(player.getUniqueId());
-
-        // If no members
-        if (p.getMembers().size() == 1) {
-            p.disband();
-            Bukkit.getPlayer(p.getLeader()).sendMessage(Chat.toColor("&bThe party has been disbanded as all the members have left"));
-        }
+        ChatUtils.toggle(player.getUniqueId());
+        player.sendMessage(Chat.toColor("&bParty chat is now " + ChatUtils.getChatStatus(player.getUniqueId())));
     }
 
     @Override

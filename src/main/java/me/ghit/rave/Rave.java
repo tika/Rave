@@ -1,6 +1,8 @@
 package me.ghit.rave;
 
 import me.ghit.rave.commands.CommandManager;
+import me.ghit.rave.commands.subcommands.ChatCMD;
+import me.ghit.rave.listeners.ChatListener;
 import me.ghit.rave.templates.Invite;
 import me.ghit.rave.templates.Party;
 import org.bukkit.Bukkit;
@@ -25,6 +27,7 @@ public final class Rave extends JavaPlugin {
         Rave.plugin = this;
 
         getCommand("rave").setExecutor(new CommandManager());
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
 
         final long loadms = System.currentTimeMillis() - startms;
         logger.log(Level.INFO, String.format("[Rave] Loaded in %sms", loadms));
