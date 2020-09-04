@@ -5,6 +5,10 @@ import me.ghit.rave.commands.SubCommand;
 import me.ghit.rave.templates.Invite;
 import me.ghit.rave.utils.Chat;
 import me.ghit.rave.utils.PartyUtils;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -67,9 +71,14 @@ public class InviteCMD extends SubCommand {
          } else {
              int seconds = plugin.fetchConfig().getConfig().getInt("invite-expiry");
 
-            player.sendMessage(Chat.toColor(String.format("&bYou invited &3%s &bto the party, they have %s seconds to join!", mentioned.getName(), seconds)));
-            mentioned.sendMessage(Chat.toColor(String.format("&3%s &binvited you to join their party! Type /rave join %s", player.getName(), player.getName())));
-            invite.create();
+             player.sendMessage(Chat.toColor(String.format("&bYou invited &3%s &bto the party, they have %s seconds to join!", mentioned.getName(), seconds)));
+
+             TextComponent inviteMessage = new TextComponent(Chat.toColor(String.format("&3%s &binvited you to join their party! Type /rave join %s", player.getName(), player.getName())));
+             inviteMessage.setClickEvent( new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/rave join " + player.getName() ) );
+             inviteMessage.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new Text( Chat.toColor("&3Click to join &b" + player.getName() + "'s &3party") ) ) );
+
+             mentioned.spigot().sendMessage(inviteMessage);
+             invite.create();
          }
     }
 

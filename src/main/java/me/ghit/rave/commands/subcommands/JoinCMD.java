@@ -4,6 +4,7 @@ import me.ghit.rave.commands.SubCommand;
 import me.ghit.rave.templates.Invite;
 import me.ghit.rave.utils.Chat;
 import me.ghit.rave.utils.InviteUtils;
+import me.ghit.rave.utils.PartyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -50,6 +51,14 @@ public class JoinCMD extends SubCommand {
         }
 
         Invite invite = InviteUtils.findInvite(mentioned.getUniqueId(), player.getUniqueId());
+
+        // Already in party
+        if (PartyUtils.isInParty(player.getUniqueId())) {
+            if (PartyUtils.findParty(player.getUniqueId()).getMembers().contains(mentioned.getUniqueId())) {
+                player.sendMessage(Chat.toColor("&cYou are already in that party!"));
+                return;
+            }
+        }
 
         // If not invited
         if (invite == null) {
