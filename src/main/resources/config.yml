@@ -1,0 +1,5 @@
+# The amount of time before the invite expires (in seconds)
+invite-expiry: 60
+
+# The amount of time before the player leaves the party after disconnecting (in seconds)
+disconnect-delay: 300

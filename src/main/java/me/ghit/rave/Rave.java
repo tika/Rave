@@ -1,9 +1,9 @@
 package me.ghit.rave;
 
 import me.ghit.rave.commands.CommandManager;
-import me.ghit.rave.commands.subcommands.ChatCMD;
 import me.ghit.rave.listeners.ChatListener;
 import me.ghit.rave.listeners.LeaveListener;
+import me.ghit.rave.templates.Config;
 import me.ghit.rave.templates.Invite;
 import me.ghit.rave.templates.Party;
 import org.bukkit.Bukkit;
@@ -18,6 +18,8 @@ public final class Rave extends JavaPlugin {
 
     private final Logger logger = Bukkit.getLogger();
     private final long startms = System.currentTimeMillis();
+    private Config config;
+
     private static Rave plugin;
 
     private final List<Party> parties = new ArrayList<>();
@@ -26,6 +28,7 @@ public final class Rave extends JavaPlugin {
     @Override
     public void onEnable() {
         Rave.plugin = this;
+        config = new Config(this, "config.yml");
 
         getCommand("rave").setExecutor(new CommandManager());
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
@@ -34,6 +37,8 @@ public final class Rave extends JavaPlugin {
         final long loadms = System.currentTimeMillis() - startms;
         logger.log(Level.INFO, String.format("[Rave] Loaded in %sms", loadms));
     }
+
+    public Config fetchConfig() { return config; }
 
     public List<Party> getParties() { return parties; }
     public List<Invite> getInvites() { return invites; }

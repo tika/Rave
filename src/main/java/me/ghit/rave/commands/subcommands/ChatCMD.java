@@ -36,7 +36,14 @@ public class ChatCMD extends SubCommand {
             return;
         }
 
-        ChatUtils.toggle(player.getUniqueId());
+        if (args.length == 1) {
+            ChatUtils.toggle(player.getUniqueId());
+        } else if (args[1].equalsIgnoreCase("enable")) {
+            ChatUtils.setPartyChatEnabled(player.getUniqueId(), true);
+        } else if (args[1].equalsIgnoreCase("disable")) {
+            ChatUtils.setPartyChatEnabled(player.getUniqueId(), false);
+        }
+
         player.sendMessage(Chat.toColor("&bParty chat is now " + ChatUtils.getChatStatus(player.getUniqueId())));
     }
 

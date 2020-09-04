@@ -9,25 +9,25 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class KickCMD extends SubCommand {
+public class PromoteCMD extends SubCommand {
     @Override
     public String getName() {
-        return "kick";
+        return "promote";
     }
 
     @Override
     public String getDescription() {
-        return "Kick a member from your party";
+        return "Promotes a party member to leader";
     }
 
     @Override
     public String getSyntax() {
-        return "/rave kick <player>";
+        return "/rave promote <member>";
     }
 
     @Override
     public void perform(Player player, String[] args) {
-        if (!player.hasPermission("rave.kick") || !player.hasPermission("rave.*")) {
+        if (!player.hasPermission("rave.promote") || !player.hasPermission("rave.*")) {
             player.sendMessage(Chat.toColor("&cYou do not have permission to use this command!"));
             return;
         }
@@ -45,7 +45,7 @@ public class KickCMD extends SubCommand {
         }
 
         if (mentioned == player) {
-            player.sendMessage(Chat.toColor("&cYou cannot kick yourself!"));
+            player.sendMessage(Chat.toColor("&cYou cannot promote yourself!"));
             return;
         }
 
@@ -66,9 +66,8 @@ public class KickCMD extends SubCommand {
             return;
         }
 
-        party.leaveParty(mentioned.getUniqueId());
-        party.message(Chat.toColor(String.format("&a%s has been kicked from the party!", mentioned.getName())));
-        mentioned.sendMessage(Chat.toColor(String.format("&aYou have been kicked from %s's party!", player.getName())));
+        party.promote(mentioned.getUniqueId());
+        party.message(Chat.toColor(String.format("&a%s has been promoted to the leader of the party!", mentioned.getName())));
     }
 
     @Override

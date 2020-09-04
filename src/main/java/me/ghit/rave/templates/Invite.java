@@ -24,7 +24,7 @@ public class Invite {
 
         @Override
         public void run() {
-            if (timePassed == 60) { // 60 seconds
+            if (timePassed == plugin.fetchConfig().getConfig().getInt("invite-expiry")) {
                 // Remove the invite
                 plugin.getInvites().remove(Invite.this);
                 plugin.getParties().remove(PartyUtils.findParty(inviter)); // Remove 1 player party

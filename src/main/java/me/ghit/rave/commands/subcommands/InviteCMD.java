@@ -1,5 +1,6 @@
 package me.ghit.rave.commands.subcommands;
 
+import me.ghit.rave.Rave;
 import me.ghit.rave.commands.SubCommand;
 import me.ghit.rave.templates.Invite;
 import me.ghit.rave.utils.Chat;
@@ -10,6 +11,8 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class InviteCMD extends SubCommand {
+    private final Rave plugin = Rave.getInstance();
+
     @Override
     public String getName() {
         return "invite";
@@ -62,7 +65,9 @@ public class InviteCMD extends SubCommand {
          if (invite.isInvited()) {
             player.sendMessage(Chat.toColor("&cYou have already invited this player!"));
          } else {
-            player.sendMessage(Chat.toColor(String.format("&bYou invited &3%s &bto the party, they have %s seconds to join!", mentioned.getName(), "60")));
+             int seconds = plugin.fetchConfig().getConfig().getInt("invite-expiry");
+
+            player.sendMessage(Chat.toColor(String.format("&bYou invited &3%s &bto the party, they have %s seconds to join!", mentioned.getName(), seconds)));
             mentioned.sendMessage(Chat.toColor(String.format("&3%s &binvited you to join their party! Type /rave join %s", player.getName(), player.getName())));
             invite.create();
          }

@@ -19,10 +19,10 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         subcommands.add(new InviteCMD());
         subcommands.add(new JoinCMD());
         subcommands.add(new ListCMD());
-        subcommands.add(new CheckCMD());
         subcommands.add(new LeaveCMD());
         subcommands.add(new ChatCMD());
         subcommands.add(new KickCMD());
+        subcommands.add(new PromoteCMD());
     }
 
     @Override
