@@ -36,14 +36,16 @@ public class Party {
 
     public void joinParty(UUID player) {
         members.add(player);
-        message("&d" + Bukkit.getOfflinePlayer(player).getName() + " has joined the party.");
+        message(String.format("&b&o%s &3has joined the party", Bukkit.getOfflinePlayer(player).getName()), true);
     }
 
     public void leaveParty(UUID player) {
         members.remove(player);
 
         if (members.size() == 1) {
-            message("&bThe party has been disbanded as all the members have left");
+            message("&7&m-------------------------------------------\n" +
+                    "&cThe party has been disbanded as all the members have left!\n" +
+                    "&7&m-------------------------------------------", false);
             disband();
             return;
         }
@@ -59,9 +61,13 @@ public class Party {
         plugin.getParties().add(this);
     }
 
-    public void message(String raw) {
-        String colored = Chat.toColor(String.format("&a&lPARTY > &7%s", raw));
-        members.forEach(member -> Bukkit.getPlayer(member).sendMessage(colored));
+    public void message(String raw, boolean prefix) {
+        String colored = Chat.toColor(raw);
+
+        if (prefix) { colored = Chat.toColor(String.format("&3&lParty &b> &b%s", raw)); }
+
+        String finalColored = colored; // Java no like non-final variables
+        members.stream().filter(member -> Bukkit.getPlayer(member) != null).forEach(member -> Bukkit.getPlayer(member).sendMessage(finalColored));
     }
 
     public void disband() {
@@ -70,6 +76,10 @@ public class Party {
 
     public void promote(UUID player) {
         leader = player;
-        message("&a" + Bukkit.getOfflinePlayer(player).getName() + " is now the party leader");
+        message(String.format(
+                "&7&m-------------------------------------------\n" +
+                "&b%s &3is now the party leader" +
+                "\n&7&m-------------------------------------------",
+                Bukkit.getOfflinePlayer(player).getName()), false);
     }
 }

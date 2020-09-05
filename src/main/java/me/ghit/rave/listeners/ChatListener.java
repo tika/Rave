@@ -23,7 +23,7 @@ public class ChatListener implements Listener {
         if (ChatUtils.hasChatEnabled(player.getUniqueId())) {
             Party party = PartyUtils.findParty(player.getUniqueId());
 
-            party.message("&3" + player.getName() + "&7: " + e.getMessage());
+            party.message(String.format("&b%s&7: %s", player.getName(), e.getMessage()), true);
             e.setCancelled(true);
 
             // Log to console

@@ -12,6 +12,7 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InviteCMD extends SubCommand {
@@ -73,7 +74,13 @@ public class InviteCMD extends SubCommand {
 
              player.sendMessage(Chat.toColor(String.format("&bYou invited &3%s &bto the party, they have %s seconds to join!", mentioned.getName(), seconds)));
 
-             TextComponent inviteMessage = new TextComponent(Chat.toColor(String.format("&3%s &binvited you to join their party! Type /rave join %s", player.getName(), player.getName())));
+             TextComponent inviteMessage = new TextComponent(Chat.toColor(
+                     String.format(
+                             "&7&m-------------------------------------------\n" +
+                             "&3%s &binvited you to join their party! \n&bYou have &3%ss&b to type &3/rave join %s &bto join" +
+                             "\n&7&m-------------------------------------------",
+                             player.getName(), seconds, player.getName())
+             ));
              inviteMessage.setClickEvent( new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/rave join " + player.getName() ) );
              inviteMessage.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new Text( Chat.toColor("&3Click to join &b" + player.getName() + "'s &3party") ) ) );
 
@@ -84,6 +91,12 @@ public class InviteCMD extends SubCommand {
 
     @Override
     public List<String> getSubcommandArguments(Player player, String[] args) {
+        if (args.length == 2) {
+            List<String> playersList = new ArrayList<>();
+            Bukkit.getServer().getOnlinePlayers().forEach(p -> playersList.add(p.getName()));
+            return playersList;
+        }
+
         return null;
     }
 }

@@ -7,6 +7,7 @@ import me.ghit.rave.utils.PartyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KickCMD extends SubCommand {
@@ -17,12 +18,12 @@ public class KickCMD extends SubCommand {
 
     @Override
     public String getDescription() {
-        return "Kick a member from your party";
+        return "kick a member from your party";
     }
 
     @Override
     public String getSyntax() {
-        return "/rave kick <player>";
+        return "/rave kick <member>";
     }
 
     @Override
@@ -67,12 +68,18 @@ public class KickCMD extends SubCommand {
         }
 
         party.leaveParty(mentioned.getUniqueId());
-        party.message(Chat.toColor(String.format("&a%s has been kicked from the party!", mentioned.getName())));
-        mentioned.sendMessage(Chat.toColor(String.format("&aYou have been kicked from %s's party!", player.getName())));
+        party.message(Chat.toColor(String.format("&3%s &bhas been kicked from the party!", mentioned.getName())), true);
+        mentioned.sendMessage(Chat.toColor(String.format("&cYou have been kicked from %s's party!", player.getName())));
     }
 
     @Override
     public List<String> getSubcommandArguments(Player player, String[] args) {
+        if (args.length == 2 && PartyUtils.isInParty(player.getUniqueId())) {
+            List<String> membersList = new ArrayList<>();
+            PartyUtils.findParty(player.getUniqueId()).getMembers().forEach(member -> membersList.add(Bukkit.getOfflinePlayer(member).getName()));
+            return membersList;
+        }
+
         return null;
     }
 }

@@ -7,6 +7,7 @@ import me.ghit.rave.utils.PartyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PromoteCMD extends SubCommand {
@@ -17,7 +18,7 @@ public class PromoteCMD extends SubCommand {
 
     @Override
     public String getDescription() {
-        return "Promotes a party member to leader";
+        return "promotes a party member to leader";
     }
 
     @Override
@@ -67,11 +68,15 @@ public class PromoteCMD extends SubCommand {
         }
 
         party.promote(mentioned.getUniqueId());
-        party.message(Chat.toColor(String.format("&a%s has been promoted to the leader of the party!", mentioned.getName())));
     }
 
     @Override
     public List<String> getSubcommandArguments(Player player, String[] args) {
+        if (args.length == 2 && PartyUtils.isInParty(player.getUniqueId())) {
+            List<String> membersList = new ArrayList<>();
+            PartyUtils.findParty(player.getUniqueId()).getMembers().forEach(member -> membersList.add(Bukkit.getOfflinePlayer(member).getName()));
+            return membersList;
+        }
         return null;
     }
 }

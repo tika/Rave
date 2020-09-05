@@ -76,7 +76,7 @@ public class Invite {
     }
 
     private void expired() {
-        if (Bukkit.getPlayer(invitedPlayer) != null) Bukkit.getPlayer(invitedPlayer).sendMessage(Chat.toColor(String.format("&dThe invite from &5%s &dhas now expired!", Bukkit.getOfflinePlayer(inviter).getName())));
-        if (Bukkit.getPlayer(inviter) != null) Bukkit.getPlayer(inviter).sendMessage(Chat.toColor(String.format("&dThe invite to &5%s &dhas now expired!", Bukkit.getOfflinePlayer(invitedPlayer).getName())));
+        if (Bukkit.getPlayer(invitedPlayer) != null) Bukkit.getPlayer(invitedPlayer).sendMessage(Chat.toColor(String.format("&bThe invite from &3%s &bhas now expired!", Bukkit.getOfflinePlayer(inviter).getName())));
+        if (Bukkit.getPlayer(inviter) != null) Bukkit.getPlayer(inviter).sendMessage(Chat.toColor(String.format("&bThe invite to &3%s &bhas now expired!", Bukkit.getOfflinePlayer(invitedPlayer).getName())));
     }
 }

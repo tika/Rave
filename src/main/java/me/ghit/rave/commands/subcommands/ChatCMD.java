@@ -6,6 +6,7 @@ import me.ghit.rave.utils.ChatUtils;
 import me.ghit.rave.utils.PartyUtils;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ChatCMD extends SubCommand {
@@ -16,12 +17,12 @@ public class ChatCMD extends SubCommand {
 
     @Override
     public String getDescription() {
-        return "Toggles party chat";
+        return "enables or disables party specific chat";
     }
 
     @Override
     public String getSyntax() {
-        return "/party chat [<enable, disable>]";
+        return "/rave chat [<enable/disable>]";
     }
 
     @Override
@@ -44,11 +45,12 @@ public class ChatCMD extends SubCommand {
             ChatUtils.setPartyChatEnabled(player.getUniqueId(), false);
         }
 
-        player.sendMessage(Chat.toColor("&bParty chat is now " + ChatUtils.getChatStatus(player.getUniqueId())));
+        player.sendMessage(Chat.toColor("&b&oParty chat &3is now " + ChatUtils.getChatStatus(player.getUniqueId())));
     }
 
     @Override
     public List<String> getSubcommandArguments(Player player, String[] args) {
+        if (args.length == 2) { return Arrays.asList("enabled", "disabled"); }
         return null;
     }
 }

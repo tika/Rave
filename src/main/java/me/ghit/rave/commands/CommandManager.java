@@ -2,6 +2,11 @@ package me.ghit.rave.commands;
 
 import me.ghit.rave.commands.subcommands.*;
 import me.ghit.rave.utils.Chat;
+import me.ghit.rave.utils.TextUtils;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,15 +43,32 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                     }
                 }
             } else { // Only command is ran
-                p.sendMessage(Chat.toColor("&7---------------- &a&lR&b&lA&c&lV&d&lE &7----------------"));
+                p.sendMessage(Chat.toColor("&7&m----------------&r &a&lR&b&lA&c&lV&d&lE &7&m----------------"));
                 p.sendMessage(" ");
-                p.sendMessage(Chat.toColor("&7Rave is a fully-fledged parties plugin, inspired by Hypixel, made for the community."));
+                p.sendMessage(Chat.toColor("&cRave&7 is a simple to use parties plugin, inspired by the original &6&oHypixel&7 parties system, made for simplicity\n"));
                 p.sendMessage(" ");
-                p.sendMessage(Chat.toColor("&dCommands:"));
+                p.sendMessage(Chat.toColor("&d&lCommands"));
 
                 for (SubCommand subCommand : getSubCommands()) {
-                    p.sendMessage(Chat.toColor(String.format("&c%s &8- &a%s", subCommand.getSyntax(), subCommand.getDescription())));
+                    TextComponent hoverCommand;
+
+                    hoverCommand = new TextComponent(Chat.toColor(String.format("&3&o%s &8- &b%s", subCommand.getSyntax(), subCommand.getDescription())));
+                    hoverCommand.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, subCommand.getSyntax()));
+
+                    // Remove sub arguments
+                    if (subCommand.getSyntax().split(" ").length > 2) {
+                        hoverCommand.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, subCommand.getSyntax().substring(0, subCommand.getSyntax().lastIndexOf(" "))));
+                    }
+
+                    hoverCommand.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(
+                            Chat.toColor(String.format("&3&l%s\n&b%s", TextUtils.capitalizeFirst(subCommand.getName()), subCommand.getDescription()))
+                    )));
+
+                    p.spigot().sendMessage(hoverCommand);
                 }
+
+                p.sendMessage(" ");
+                p.sendMessage(Chat.toColor("&7&m-------------------------------------------"));
             }
         }
 
@@ -70,7 +92,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
             return subcommandsArguments;
 
-        }else if(args.length >= 2){
+        } else if(args.length >= 2) {
 
             for (int i = 0; i < getSubCommands().size(); i++){
                 if (args[0].equalsIgnoreCase(getSubCommands().get(i).getName())){

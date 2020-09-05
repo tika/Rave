@@ -8,6 +8,8 @@ import me.ghit.rave.utils.PartyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class JoinCMD extends SubCommand {
@@ -71,6 +73,11 @@ public class JoinCMD extends SubCommand {
 
     @Override
     public List<String> getSubcommandArguments(Player player, String[] args) {
+        if (args.length == 2) {
+            List<String> playersList = new ArrayList<>();
+            Bukkit.getServer().getOnlinePlayers().forEach(p -> playersList.add(p.getName()));
+            return playersList;
+        }
         return null;
     }
 }

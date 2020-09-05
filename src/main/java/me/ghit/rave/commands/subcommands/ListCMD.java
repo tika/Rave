@@ -40,16 +40,25 @@ public class ListCMD extends SubCommand {
             return;
         }
 
-        player.sendMessage(Chat.toColor("&7-------------"));
-        player.sendMessage(Chat.toColor(String.format("&aLeader: %s", Bukkit.getOfflinePlayer(party.getLeader()).getName())));
-        player.sendMessage(Chat.toColor("&7-- &dMembers &7--"));
+        long activeTime = ((System.currentTimeMillis() - party.getCreatedTime()) / 1000) / 60;
+
+        player.sendMessage(Chat.toColor("&7&m-------------------------------------------"));
+
+        player.sendMessage(Chat.toColor("&3&oParty has been active for: &b&l" + activeTime + " minute(s)"));
+
+        player.sendMessage(" ");
+
+        player.sendMessage(Chat.toColor(String.format("&6&lLEADER&8: &b%s", Bukkit.getOfflinePlayer(party.getLeader()).getName())));
+        player.sendMessage(" ");
+
+        player.sendMessage(Chat.toColor("&3&lMembers"));
 
         for (UUID member : party.getMembers()) {
             if (party.getLeader() != member)
-                player.sendMessage(Chat.toColor(String.format("&d%s", Bukkit.getOfflinePlayer(member).getName())));
+                player.sendMessage(Chat.toColor(String.format(" &8- &b%s", Bukkit.getOfflinePlayer(member).getName())));
         }
 
-        player.sendMessage(Chat.toColor("&7-------------"));
+        player.sendMessage(Chat.toColor("&7&m-------------------------------------------"));
     }
 
     @Override

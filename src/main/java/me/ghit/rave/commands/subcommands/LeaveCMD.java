@@ -17,7 +17,7 @@ public class LeaveCMD extends SubCommand {
 
     @Override
     public String getDescription() {
-        return "Leave the party";
+        return "leave the party";
     }
 
     @Override
@@ -41,7 +41,7 @@ public class LeaveCMD extends SubCommand {
         String leaderName = Bukkit.getOfflinePlayer(p.getLeader()).getName();
         player.sendMessage(Chat.toColor(String.format("&aYou have left &d%s's &aparty!", leaderName)));
 
-        p.message(player.getName() + "&b has left the party");
+        p.message(Chat.toColor(String.format("&3%s has left the &6&oparty!", player.getName())), true);
         p.leaveParty(player.getUniqueId());
     }
 

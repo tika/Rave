@@ -35,7 +35,7 @@ public class LeaveListener implements Listener {
 
                 if (timePassed == dd) {
                     // leave party
-                    party.message(player.getName() + "&b has left the party due to leaving for more than &a" + dd + "s");
+                    party.message(String.format("&b%s&3 has left the party due to leaving for more than &b%ss", player.getName(), dd), true);
                     party.leaveParty(player.getUniqueId());
                     this.cancel();
                 }
@@ -43,7 +43,7 @@ public class LeaveListener implements Listener {
             }
         };
 
-        party.message(player.getName() + "&b has disconnected, this player will be removed from the party in &a" + dd + "s");
+        party.message(String.format("&b%s&3 has disconnected, this player will be removed from the party in &b%ss", player.getName() ,dd), true);
 
         leavePartyChecker.run();
     }
