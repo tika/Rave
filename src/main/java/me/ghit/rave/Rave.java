@@ -39,7 +39,7 @@ public final class Rave extends JavaPlugin {
         pm.registerEvents(new LeaveListener(), this);
 
         final long loadms = System.currentTimeMillis() - startms;
-        logger.log(Level.INFO, String.format("[Rave] Loaded in %sms", loadms));
+        logger.log(Level.INFO, "[Rave] Loaded in %s" + loadms + "ms");
     }
 
     public Config fetchConfig() { return config; }
