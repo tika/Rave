@@ -61,7 +61,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                     }
 
                     hoverCommand.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(
-                            Chat.toColor(String.format("&3&l%s\n&b%s", TextUtils.capitalizeFirst(subCommand.getName()), subCommand.getDescription()))
+                            Chat.toColor(String.format("&3&l%s\n&b%s", TextUtils.capitalize(subCommand.getName()), subCommand.getDescription()))
                     )));
 
                     p.spigot().sendMessage(hoverCommand);
