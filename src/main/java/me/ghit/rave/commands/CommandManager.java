@@ -20,6 +20,9 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
     private final ArrayList<SubCommand> subcommands = new ArrayList<>();
 
+    /**
+     * CommandManager manages commands
+     */
     public CommandManager(){
         subcommands.add(new InviteCMD());
         subcommands.add(new JoinCMD());
@@ -43,16 +46,16 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                     }
                 }
             } else { // Only command is ran
-                p.sendMessage(Chat.toColor("&7&m----------------&r &a&lR&b&lA&c&lV&d&lE &7&m----------------"));
+                p.sendMessage(Chat.toColor("&7&m----------------&r &6&lR&8&lA&6&lV&8&lE &7&m----------------"));
                 p.sendMessage(" ");
-                p.sendMessage(Chat.toColor("&cRave&7 is a simple to use parties plugin, inspired by the original &6&oHypixel&7 parties system, made for simplicity\n"));
+                p.sendMessage(Chat.toColor("&6Rave&8 is a simple to use parties plugin, inspired by the original &6&oHypixel&8 parties system, made for simplicity\n"));
                 p.sendMessage(" ");
-                p.sendMessage(Chat.toColor("&d&lCommands"));
+                p.sendMessage(Chat.toColor("&6&lCommands"));
 
                 for (SubCommand subCommand : getSubCommands()) {
                     TextComponent hoverCommand;
 
-                    hoverCommand = new TextComponent(Chat.toColor(String.format("&3&o%s &8- &b%s", subCommand.getSyntax(), subCommand.getDescription())));
+                    hoverCommand = new TextComponent(Chat.toColor(String.format("&6&o%s &8- &6%s", subCommand.getSyntax(), subCommand.getDescription())));
                     hoverCommand.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, subCommand.getSyntax()));
 
                     // Remove sub arguments
@@ -61,7 +64,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                     }
 
                     hoverCommand.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(
-                            Chat.toColor(String.format("&3&l%s\n&b%s", TextUtils.capitalize(subCommand.getName()), subCommand.getDescription()))
+                            Chat.toColor(String.format("&6&l%s\n&8%s", TextUtils.capitalize(subCommand.getName()), subCommand.getDescription()))
                     )));
 
                     p.spigot().sendMessage(hoverCommand);
