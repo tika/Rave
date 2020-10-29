@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public final class Rave extends JavaPlugin {
 
     private final Logger logger = Bukkit.getLogger();
-    private final long startms = System.currentTimeMillis();
+    private final long start_ms = System.currentTimeMillis();
     private Config config;
 
     private static Rave plugin;
