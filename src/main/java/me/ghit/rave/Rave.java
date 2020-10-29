@@ -7,6 +7,7 @@ import me.ghit.rave.templates.Config;
 import me.ghit.rave.templates.Invite;
 import me.ghit.rave.templates.Party;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -30,9 +31,12 @@ public final class Rave extends JavaPlugin {
         Rave.plugin = this;
         config = new Config(this, "config.yml");
 
+        PluginManager pm = getServer().getPluginManager();
+
         getCommand("rave").setExecutor(new CommandManager());
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
-        getServer().getPluginManager().registerEvents(new LeaveListener(), this);
+
+        pm.registerEvents(new ChatListener(), this);
+        pm.registerEvents(new LeaveListener(), this);
 
         final long loadms = System.currentTimeMillis() - startms;
         logger.log(Level.INFO, String.format("[Rave] Loaded in %sms", loadms));
