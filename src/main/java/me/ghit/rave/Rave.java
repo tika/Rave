@@ -38,8 +38,8 @@ public final class Rave extends JavaPlugin {
         pm.registerEvents(new ChatListener(), this);
         pm.registerEvents(new LeaveListener(), this);
 
-        final long loadms = System.currentTimeMillis() - start_ms;
-        logger.log(Level.INFO, String.format("[Rave] Loaded in %sms", loadms));
+        final long loadms = System.currentTimeMillis() - startms;
+        logger.log(Level.INFO, "[Rave] Loaded in %s" + loadms + "ms");
     }
 
     public Config fetchConfig() { return config; }
